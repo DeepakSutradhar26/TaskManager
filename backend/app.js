@@ -1,7 +1,13 @@
 const express = require("express");
 const app = express();
-const dotenv = require("dotenv");
+const middlewareError = require("./middleware/error");
 
-dotenv.config({path:"backend/config/config.env"});
+//Routes Import
+const user = require("./routes/userRoutes");
+
+app.use("/api/v1", user);
+
+//Middleware for errors
+app.use(middlewareError);
 
 module.exports = app;
