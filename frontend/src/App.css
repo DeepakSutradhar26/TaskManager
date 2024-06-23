@@ -1,0 +1,37 @@
+:root {
+    --color-1: #000000e2;
+    --color-2: #152469e2;
+    --percent-1: 0%;
+    --percent-2: 100%;
+}
+
+body {
+    background: linear-gradient(to bottom, #0e0e0e 20%, #1b1b1b 70%, #102c46 90%, #12344f);
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.txt_ {
+    width: 60%;
+    background: #cfcfcf;
+    background: linear-gradient(to top, #cecece 0%, #ffffff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 1.1em;
+    overflow: hidden;
+}
+
+.modern_btn_ {
+    border: 1px solid rgba(99, 128, 255, 0.5);
+    background: linear-gradient(180deg,
+            var(--color-1) var(--percent-1),
+            var(--color-2) var(--percent-2)), rgba(113, 47, 255, 0.12);
+    box-shadow: 0 0 5px #bf97ff3d;
+}

@@ -31,6 +31,13 @@ const userSchema = new mongoose.Schema({
             required: true,
         }
     },
+    projects: [
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: "Project",
+            required: true
+        }
+    ],
     resetPasswordToken: String,
     resetPasswordExpires: String,
 });

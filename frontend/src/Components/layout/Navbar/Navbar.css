@@ -1,0 +1,47 @@
+* {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    height: 4vw;
+    width: 100vw;
+}
+
+.in_ctn {
+    width: 90vw;
+}
+
+.logo_box {
+    height: 100%;
+    width: 5vw;
+    width: 12.5vw;
+}
+
+.list_box {
+    list-style: none;
+    height: 100%;
+    width: 30vw;
+}
+
+.btn_box {
+    height: 100%;
+    width: 12.5vw;
+}
+
+.btn {
+    border-radius: 0.25em;
+    height: 100%;
+    width: 5vw;
+}
+
+.log_btn {
+    border: 1px solid rgba(99, 128, 255, 0.5);
+    box-shadow: 0 0 5px #bf97ff3d;
+    background: transparent;
+}
+
+.log_btn:hover{
+    background: rgba(255, 255, 255, 0.336);
+}

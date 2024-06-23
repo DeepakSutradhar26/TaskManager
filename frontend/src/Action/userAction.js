@@ -16,11 +16,12 @@ export const loginUser = (email, password) = async (dispatch) => {
         );
         dispatch({
             type: "loginUserSuccess",
-            user: data.user
+            payload: data.user
         });
     } catch (error) {
         dispatch({
-            type: "loginUserFailure"
+            type: "loginUserFailure",
+            payload: error.response.message
         });
     }
 }
@@ -50,11 +51,40 @@ export const registerUser = (name, email, avatar, password) = async (dispatch) =
             type: "registerUserRequest",
         });
 
-        const {data} = await axios.post("api/v1/register")
-
+        const { data } = await axios.post("api/v1/register",
+            { name, email, avatar, password },
+            {
+                headers: {
+                    "Content-type": "application/json",
+                }
+            }
+        );
+        dispatch({
+            type: "registerUserSuccess",
+            payload: data.user
+        });
     } catch (error) {
         dispatch({
             type: "registerUserFailure",
+            payload: error.response.message,
+        });
+    }
+}
+
+export const loadUser = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: "loadUserRequest",
+        });
+
+        const { data } = await axios.get("/api/v1/me");
+        dispatch({
+            type: "loadUserSuccess",
+            payload: data.user,
+        });
+    } catch (error) {
+        dispatch({
+            type: "loadUserFailure",
             payload: error.response.message,
         });
     }
