@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineLogout } from "react-icons/hi";
 import { useDispatch } from 'react-redux';
-import { loadUser, logoutUser } from '../../../Action/userAction';
+import { logoutUser } from '../../../Action/userAction';
 
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -32,7 +32,7 @@ const Navbar = () => {
         <ul className='list_box flex flex-row justify-around items-center'>
           <li><Link >Resources</Link></li>
           <li><Link to="/livechat">LiveChat</Link></li>
-          <li><Link to="/videocall">VideoCall</Link></li>
+          <li><Link to="/lobby">VideoCall</Link></li>
           <li><Link to="/about">About Us</Link></li>
         </ul>
 

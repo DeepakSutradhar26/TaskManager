@@ -41,6 +41,7 @@
     height: 7vh;
     padding-left: 0.8em;
     margin-top: 2vw;
+    color:white;
 }
 
 .big_btn{
@@ -48,6 +49,7 @@
     height: 7vh;
     margin-top: 2vw;
     border-radius: 0.25em;
+    color:white;
 }
 
 .trouble_box{

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import login_img from "../../Images/log_image.png";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../Action/userAction";
+import { useNavigate } from 'react-router-dom';
 import { useAlert } from "react-alert";
 
 const Register = () => {
@@ -11,13 +12,16 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const alert = useAlert();
-
     const { error } = useSelector((state) => state.user);
 
-    const handleSumbit = (e) => {
+    const handleSumbit = async (e) => {
         e.preventDefault();
-        dispatch(registerUser(name, email, password));
+        await dispatch(registerUser(name, email, password));
+        if (!error) {
+            navigate(`/dashboard`);
+        }
     }
 
     useEffect(() => {
@@ -25,10 +29,12 @@ const Register = () => {
             alert.error(error);
             dispatch({ type: "clearErrors" });
         }
-    }, [dispatch, alert, error]);
+    }, [alert, dispatch, error]);
 
     return (
-        <div className="register_ctn flex justify-center items-center body_">
+        <div className="register_ctn flex justify-center items-center
+        absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]
+        ">
             <div className="register_box btns_ flex flex-row items-center">
                 <form className="left_box flex flex-col items-center" onSubmit={handleSumbit}>
                     <h1 className='txt_ text-left login_header'>Register</h1>
@@ -63,8 +69,8 @@ const Register = () => {
                     >Sign Up</button>
                     <div className="trouble_box flex flex-col justify-between">
                         <div>
-                            <div className='inline'>Already have an Account?</div>
-                            <Link to="/dashboard" className='text-left link_txt'>LogIn</Link>
+                            <div className='inline text-white'>Already have an Account?</div>
+                            <Link to="/dashboard" className='text-left link_txt text-white'>LogIn</Link>
                         </div>
                     </div>
                 </form>

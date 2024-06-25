@@ -5,16 +5,11 @@
     --percent-2: 100%;
 }
 
-.body_ {
-    background: linear-gradient(to bottom, #0e0e0e 20%, #1b1b1b 70%, #102c46 90%, #12344f);
+body{
+    user-select: none;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    color: white;
-    position: relative;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
+    overflow-x: hidden;
 }
 
 .txt_ {

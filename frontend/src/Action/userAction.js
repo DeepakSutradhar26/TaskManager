@@ -14,7 +14,6 @@ export const loginUser = (email, password) => async (dispatch) => {
                 }
             }
         );
-        console.log("axios done")
         dispatch({
             type: "loginUserSuccess",
             payload: data.user
@@ -47,7 +46,7 @@ export const logoutUser = () => async (dispatch) => {
     }
 }
 
-export const registerUser = (name, email, avatar, password) => async (dispatch) => {
+export const registerUser = (name, email, password, avatar) => async (dispatch) => {
     try {
         dispatch({
             type: "registerUserRequest",
@@ -57,7 +56,7 @@ export const registerUser = (name, email, avatar, password) => async (dispatch) 
             { name, email, avatar, password },
             {
                 headers: {
-                    "Content-type": "application/json",
+                    "Content-Type": "application/json",
                 }
             }
         );
@@ -68,7 +67,9 @@ export const registerUser = (name, email, avatar, password) => async (dispatch) 
     } catch (error) {
         dispatch({
             type: "registerUserFailure",
-            payload: error.message,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
         });
     }
 }

@@ -2,12 +2,20 @@ import React, { useState, useCallback, useEffect } from 'react';
 import "./Lobby.css";
 import { useSocket } from "../../../context/SocketProvider";
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 const Lobby = () => {
     const [email, setEmail] = useState();
     const [room, setRoom] = useState();
     const socket = useSocket();
     const navigate = useNavigate();
+    const { user } = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if (user) {
+            setEmail(user.email);
+        }
+    }, []);
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
@@ -29,7 +37,9 @@ const Lobby = () => {
 
     return (
         <>
-            <div className="lobby_container flex justify-center items-center">
+            <div className="lobby_container flex justify-center items-center
+             absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]
+            ">
                 <div className='lobby flex flex-col justify-center items-center'>
                     <h3 className='txt_ text-center lobby_header' >Lobby</h3>
                     <form className='flex flex-col justify-center items-center' onSubmit={handleSubmit}>

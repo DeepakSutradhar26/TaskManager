@@ -1,33 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./Login.css";
 import { Link } from "react-router-dom";
 import login_img from "../../Images/log_image.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../../Action/userAction";
-import { useAlert } from "react-alert";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const alert = useAlert();
 
-  const { error } = useSelector((state) => state.user);
 
   const handleSumbit = (e) => {
     e.preventDefault();
     dispatch(loginUser(email, password));
   }
 
-  useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch({ type: "clearErrors" });
-    }
-  }, [dispatch, alert, error]);
-
   return (
-    <div className="login_ctn flex justify-center items-center body_">
+    <div className="login_ctn flex justify-center items-center body_
+    absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]
+    ">
       <div className="login_box btns_ flex flex-row items-center">
         <form className="left_box flex flex-col items-center" onSubmit={handleSumbit}>
           <h1 className='txt_ text-left login_header'>Login</h1>
@@ -53,10 +45,10 @@ const Login = () => {
             className='big_btn bg-sky-600 hover:bg-sky-500'
           >Log in</button>
           <div className="trouble_box flex flex-col justify-between">
-            <Link to="/password/forgot" className='text-left link_txt'>Forgot Password</Link>
+            <Link to="/password/forgot" className='text-left link_txt text-white'>Forgot Password</Link>
             <div>
-              <div className='inline'>Don't have an account?</div>
-              <Link to="/register" className='text-left link_txt'>Create Account</Link>
+              <div className='inline text-white'>Don't have an account?</div>
+              <Link to="/register" className='text-left link_txt text-white'>Create Account</Link>
             </div>
           </div>
         </form>

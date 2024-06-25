@@ -114,11 +114,18 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
 });
 
 //Req user data
-exports.getUserData = catchAsyncError(async (req, res, next) => {
-    const user = await User.findById(req.user.id);
+exports.getUserData = catchAsyncError(async (req, res) => {
+    const user = await User.findById(req.user._id);
 
-    res.status(200).json({
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: "User not found",
+        });
+    }
+
+    res.status(201).json({
         success: true,
-        user
-    })
+        user,
+    });
 });
