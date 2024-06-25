@@ -2,16 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import "./index.css";
-import { BrowserRouter as Router } from "react-router-dom";
 import { SocketProvider } from './context/SocketProvider';
+import { Provider } from 'react-redux';
+import store from "./store";
+import { Provider as AlertProvider, positions, transitions } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const options = {
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  transition: transitions.SCALE,
+}
+
 root.render(
   <React.StrictMode>
-    <Router>
+    <Provider store={store}>
       <SocketProvider>
-        <App />
+        <AlertProvider template={AlertTemplate} {...options}>
+          <App />
+        </AlertProvider>
       </SocketProvider>
-    </Router>
+    </Provider>
   </React.StrictMode>
 );

@@ -15,6 +15,7 @@ const Lobby = () => {
     }, [email, room, socket]);
 
     const handleRoomJoin = useCallback((data) => {
+        console.log("WTF");
         const { room } = data;
         navigate(`/room/${room}`);
     }, [navigate]);
@@ -24,21 +25,31 @@ const Lobby = () => {
         return () => {
             socket.off("room:join", handleRoomJoin);
         }
-    }, [socket]);
+    }, [socket, handleRoomJoin]);
 
     return (
         <>
             <div className="lobby_container flex justify-center items-center">
-                <div className='lobby'>
-                    <h1>Lobby</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="email">Email ID</label>
-                        <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} />
-                        <br />
-                        <label htmlFor="room">Room Number</label>
-                        <input type="text" id="room" value={room} onChange={e => setRoom(e.target.value)} />
-                        <br />
-                        <button>JOIN</button>
+                <div className='lobby flex flex-col justify-center items-center'>
+                    <h3 className='txt_ text-center lobby_header' >Lobby</h3>
+                    <form className='flex flex-col justify-center items-center' onSubmit={handleSubmit}>
+                        <input
+                            className='modern_btn_ in_feild'
+                            placeholder='Email'
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                        <input
+                            className='modern_btn_ in_feild'
+                            placeholder='Room'
+                            type="text"
+                            id="room"
+                            value={room}
+                            onChange={e => setRoom(e.target.value)}
+                        />
+                        <button className='join_btn bg-sky-600 hover:bg-sky-500'>Join</button>
                     </form>
                 </div>
             </div>

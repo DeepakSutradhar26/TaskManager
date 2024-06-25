@@ -1,7 +1,8 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, Fragment } from "react";
 import ReactPlayer from "react-player";
 import peer from "../service/peer";
 import { useSocket } from "../../../context/SocketProvider";
+import "./Room.css";
 
 const RoomPage = () => {
   const socket = useSocket();
@@ -56,7 +57,7 @@ const RoomPage = () => {
   const handleNegoNeeded = useCallback(async () => {
     const offer = await peer.getOffer();
     socket.emit("peer:nego:needed", { offer, to: remoteSocketId });
-  }, [remoteSocketId,socket]);
+  }, [remoteSocketId, socket]);
 
   useEffect(() => {
     peer.peer.addEventListener("negotiationneeded", handleNegoNeeded);
@@ -86,7 +87,10 @@ const RoomPage = () => {
 
   useEffect(() => {
     peer.peer.addEventListener("track", handleSharingTrack);
-  }, []);
+    return () => {
+      peer.peer.removeEventListener("track", handleSharingTrack);
+    }
+  }, [handleSharingTrack]);
 
   useEffect(() => {
     socket.on("user:joined", handleUserJoined);
@@ -112,36 +116,40 @@ const RoomPage = () => {
   ]);
 
   return (
-    <div>
-      <h1>Room Page</h1>
-      <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
-      {myStream && <button onClick={sendStreams}>Send Stream</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
-      {myStream && (
-        <>
-          <h1>My Stream</h1>
-          <ReactPlayer
-            playing
-            muted
-            height="100px"
-            width="200px"
-            url={myStream}
-          />
-        </>
-      )}
-      {remoteStream && (
-        <>
-          <h1>Remote Stream</h1>
-          <ReactPlayer
-            playing
-            muted
-            height="100px"
-            width="200px"
-            url={remoteStream}
-          />
-        </>
-      )}
-    </div>
+    <Fragment>
+      <div className="room_ctn flex flex-row">
+        <div className="sidebar"></div>
+        <div className="room_ctn background body_">
+          <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
+          {myStream && <button onClick={sendStreams}>Send Stream</button>}
+          {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
+          {myStream && (
+            <>
+              <h1>My Stream</h1>
+              <ReactPlayer
+                playing
+                muted
+                height="100px"
+                width="200px"
+                url={myStream}
+              />
+            </>
+          )}
+          {remoteStream && (
+            <>
+              <h1>Remote Stream</h1>
+              <ReactPlayer
+                playing
+                muted
+                height="100px"
+                width="200px"
+                url={remoteStream}
+              />
+            </>
+          )}
+        </div>
+      </div>
+    </Fragment>
   );
 };
 

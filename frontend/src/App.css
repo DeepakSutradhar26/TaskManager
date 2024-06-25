@@ -5,7 +5,7 @@
     --percent-2: 100%;
 }
 
-body {
+.body_ {
     background: linear-gradient(to bottom, #0e0e0e 20%, #1b1b1b 70%, #102c46 90%, #12344f);
     margin: 0;
     padding: 0;
@@ -13,6 +13,8 @@ body {
     color: white;
     position: relative;
     overflow: hidden;
+    width: 100vw;
+    height: 100vh;
 }
 
 .txt_ {
@@ -24,14 +26,12 @@ body {
     -webkit-text-fill-color: transparent;
     font-weight: 500;
     letter-spacing: -0.05em;
-    line-height: 1.1em;
     overflow: hidden;
 }
 
 .modern_btn_ {
     border: 1px solid rgba(99, 128, 255, 0.5);
-    background: linear-gradient(180deg,
-            var(--color-1) var(--percent-1),
-            var(--color-2) var(--percent-2)), rgba(113, 47, 255, 0.12);
     box-shadow: 0 0 5px #bf97ff3d;
+    background: transparent;
+    border-radius: 0.25em;
 }

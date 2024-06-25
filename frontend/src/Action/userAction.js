@@ -1,27 +1,29 @@
-const axios = require("axios");
+import axios from "axios";
 
-export const loginUser = (email, password) = async (dispatch) => {
+export const loginUser = (email, password) => async (dispatch) => {
     try {
         dispatch({
             type: "loginUserRequest"
         });
 
-        const data = await axios.post("/api/v1/login",
+        const { data } = await axios.post("/api/v1/login",
             { email, password },
             {
                 headers: {
-                    "Content-type": "application/json",
+                    "Content-Type": "application/json",
                 }
             }
         );
+        console.log("axios done")
         dispatch({
             type: "loginUserSuccess",
             payload: data.user
         });
     } catch (error) {
+        console.error('Login error:', error);
         dispatch({
             type: "loginUserFailure",
-            payload: error.response.message
+            payload: error.message
         });
     }
 }
@@ -32,7 +34,7 @@ export const logoutUser = () => async (dispatch) => {
             type: "logoutUserRequest",
         });
 
-        await axios.get("/app/v1/logout");
+        await axios.get("/api/v1/logout");
         dispatch({
             type: "logoutUserSuccess",
         });
@@ -40,12 +42,12 @@ export const logoutUser = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "logoutUserFailure",
-            payload: error.response.message,
+            payload: error.message,
         });
     }
 }
 
-export const registerUser = (name, email, avatar, password) = async (dispatch) => {
+export const registerUser = (name, email, avatar, password) => async (dispatch) => {
     try {
         dispatch({
             type: "registerUserRequest",
@@ -66,7 +68,7 @@ export const registerUser = (name, email, avatar, password) = async (dispatch) =
     } catch (error) {
         dispatch({
             type: "registerUserFailure",
-            payload: error.response.message,
+            payload: error.message,
         });
     }
 }
@@ -85,7 +87,7 @@ export const loadUser = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "loadUserFailure",
-            payload: error.response.message,
+            payload: error.message,
         });
     }
 }

@@ -1,9 +1,9 @@
-import { configure } from "@reduxjs/toolkit";
-import { useReducer } from "./Reducer/userReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import { userReducer } from "./Reducer/userReducer";
 
-const store = configure({
+const store = configureStore({
     reducer: {
-        user: useReducer
+        user: userReducer,
     }
 });
-module.exports = store;
+export default store;

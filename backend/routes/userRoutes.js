@@ -5,6 +5,8 @@ const {
     registerUser,
     logoutUser,
     getUserData,
+    forgotPassword,
+    resetPassword,
 } = require("../controller/userController");
 const { isAuthenticatedUser } = require("../middleware/auth");
 

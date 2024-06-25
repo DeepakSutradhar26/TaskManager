@@ -1,12 +1,9 @@
-* {
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-}
 
 .navbar {
     height: 4vw;
     width: 100vw;
+    color: white;
+    z-index: 50;
 }
 
 .in_ctn {
@@ -15,7 +12,6 @@
 
 .logo_box {
     height: 100%;
-    width: 5vw;
     width: 12.5vw;
 }
 
@@ -23,6 +19,10 @@
     list-style: none;
     height: 100%;
     width: 30vw;
+}
+
+.list_box>li>a:hover{
+    color: rgb(190, 190, 190);
 }
 
 .btn_box {
@@ -44,4 +44,21 @@
 
 .log_btn:hover{
     background: rgba(255, 255, 255, 0.336);
+}
+
+.profile_box{
+    width:12.5vw;
+}
+
+.dropdown{
+    height: 12vh;
+    width: 8vw;
+    top: 4.5vw;
+    right: 4vw;
+}
+#false_dis{
+    display: none;
+}
+#true_dis{
+    display: flex;
 }
