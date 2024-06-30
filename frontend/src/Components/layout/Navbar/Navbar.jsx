@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { HiOutlineLogout } from "react-icons/hi";
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../../Action/userAction';
+import { v4 as uuid4 } from "uuid";
 
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -26,11 +27,12 @@ const Navbar = () => {
     <nav className='navbar backdrop-blur-lg border-b border-neutral-500 fixed top-0 z-50 py-3 flex justify-center items-center'>
       <div className='flex justify-between flex-row items-center h-full in_ctn'>
         <div className="logo_box flex justify-start items-center">
-          <Link className='logo_name' to="/">LOGO</Link>
+          <Link className='logo_name' to="/">TM</Link>
         </div>
 
         <ul className='list_box flex flex-row justify-around items-center'>
           <li><Link to="/tasks" >Tasks</Link></li>
+          <li><Link to={`/document/${uuid4()}`} >Doc Editor</Link></li>
           <li><Link to="/livechat">LiveChat</Link></li>
           <li><Link to="/lobby">VideoCall</Link></li>
           <li><Link to="/about">About Us</Link></li>

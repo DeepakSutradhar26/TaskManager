@@ -15,6 +15,11 @@
     width: 12.5vw;
 }
 
+.logo_name{
+    font-weight: 900;
+    font-size: 1.5vw;
+}
+
 .list_box {
     list-style: none;
     height: 100%;
