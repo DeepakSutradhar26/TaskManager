@@ -31,6 +31,13 @@ const userSchema = new mongoose.Schema({
             required: true,
         }
     },
+    tasks: [
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: "Task",
+            required: true,
+        }
+    ],
     projects: [
         {
             type: mongoose.Schema.ObjectId,

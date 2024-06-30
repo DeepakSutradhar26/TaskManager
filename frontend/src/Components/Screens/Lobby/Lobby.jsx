@@ -15,7 +15,7 @@ const Lobby = () => {
         if (user) {
             setEmail(user.email);
         }
-    }, []);
+    }, [user]);
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault();

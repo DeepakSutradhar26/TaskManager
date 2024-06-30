@@ -10,8 +10,10 @@ app.use(cookieParser());
 
 //Routes Import
 const user = require("./routes/userRoutes");
+const task = require("./routes/taskRoutes");
 
 app.use("/api/v1", user);
+app.use("/api/v1", task);
 
 //Middleware for errors
 app.use(middlewareError);

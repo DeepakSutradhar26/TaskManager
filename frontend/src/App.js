@@ -9,6 +9,7 @@ import DashBoard from "./Components/Dashboard/Dashboard";
 import { useSelector, useDispatch } from 'react-redux';
 import { loadUser } from './Action/userAction';
 import Register from './Components/Register/Register';
+import TaskManager from './Components/TaskManager/TaskManager';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={isAuthenticated ? <DashBoard /> : <Login />} />
+          <Route path="/tasks" element={isAuthenticated ? <TaskManager /> : <Login />} />
           <Route path="/lobby" element={isAuthenticated ? <Lobby /> : <Login />}></Route>
           <Route path="/room/:roomId" element={isAuthenticated ? <Room /> : <Login />} />
         </Routes>
