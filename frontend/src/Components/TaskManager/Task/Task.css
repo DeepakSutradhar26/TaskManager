@@ -42,12 +42,12 @@
 }
 
 .fxBox1 {
-    width: 13.4vw;
+    width: 18vw;
 }
 
 .fxBox2 {
     height: 100%;
-    width: 13.4vw;
+    width: 18vw;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;

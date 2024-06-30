@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { MdDelete } from "react-icons/md";
 import { IoCreate } from "react-icons/io5";
 import "./Task.css";

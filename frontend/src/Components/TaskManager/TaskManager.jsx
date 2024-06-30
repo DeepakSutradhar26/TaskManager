@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import "./TaskManager.css";
 import "./scrollbar.css";
 import { IoHome } from "react-icons/io5";
@@ -71,21 +71,21 @@ const TaskManager = () => {
         setChildData(false);
     }
 
-    const getAllTasks =() =>{
+    const getAllTasks =useCallback(()=>{
         dispatch(getUserTasks());
-    }
+    },[dispatch]);
 
-    const getImpTasks =()=>{
+    const getImpTasks = () => {
         dispatch(getUserImpTasks());
     }
 
-    const getComTasks=()=>{
+    const getComTasks = () => {
         dispatch(getUserComTasks());
     }
 
     useEffect(() => {
         getAllTasks();
-    }, []);
+    }, [getAllTasks]);
 
     useEffect(() => {
         if (error) {
@@ -96,7 +96,7 @@ const TaskManager = () => {
             alert.success(message);
             dispatch({ type: "clearMessage" });
         }
-    }, [dispatch, error, alert]);
+    }, [dispatch, error, alert, message]);
 
     return (
         <>
@@ -129,7 +129,7 @@ const TaskManager = () => {
                             <FaPlus className='plus_btn text-white' />
                         </div>
                     </div>
-                    <div className="task_box flex flex-row flex-wrap justify-evenly">
+                    <div className="task_box grid grid-cols-3 justify-items-center">
                         {tasks && tasks.map((task) => (
                             <Task
                                 key={task._id}
@@ -240,7 +240,7 @@ const TaskManager = () => {
             {state && <div onClick={handleAddTask} className="blackBox"></div>}
             {childData && <div onClick={handleChangeChildData} className="blackBox"></div>}
         </>
-    )
+    );
 }
 
 export default TaskManager;

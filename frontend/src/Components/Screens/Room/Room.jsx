@@ -3,6 +3,8 @@ import ReactPlayer from 'react-player'
 import peer from '../service/peer'
 import { useSocket } from '../../../context/SocketProvider'
 import './Room.css'
+import { IoSend } from "react-icons/io5";
+import { IoCall } from "react-icons/io5";
 
 //final code
 
@@ -126,9 +128,7 @@ const RoomPage = () => {
       >
         <div className='room_ctn background body_'>
           <div className='myStream_box flex justify-center items-center'>
-            <h4 className='text-white'>{remoteSocketId ? 'Connected' : 'No one in room'}</h4>
-            {myStream && <button className='text-white' onClick={sendStreams}>Send Stream</button>}
-            {remoteSocketId && <button className='text-white' onClick={handleCallUser}>CALL</button>}
+
 
             {myStream && (
               <>
@@ -136,25 +136,41 @@ const RoomPage = () => {
                   className="myPlayer"
                   playing
                   muted
-                  height='300px'
+                  height='200px'
                   url={myStream}
+                />
+              </>
+            )}
+            {remoteStream && (
+              <>
+                <ReactPlayer
+                  className="remotePlayer"
+                  playing
+                  muted
+                  height='200px'
+                  url={remoteStream}
                 />
               </>
             )}
           </div>
           <div className='remoteStream_box flex justify-center items-center'>
-            <div className='user_ctn'>
-              {remoteStream && (
-                <>
-                  <ReactPlayer
-                    className="remotePlayer"
-                    playing
-                    muted
-                    height='175px'
-                    url={remoteStream}
-                  />
-                </>
-              )}
+            <div className='user_ctn flex flex-col justify-evenly items-center'>
+
+              <h4 className='text-white h4_tag'>{remoteSocketId ? 'Connected' : 'No one in room'}</h4>
+              <div className="flex flex-row send_box justify-between items-center">
+                {myStream && (
+                  <div className="sendIcon flex flex-col justify-center items-center hover:cursor-pointer modern_btn_">
+                    <IoSend className='text-white' />
+                    <button className='text-white btn_text_size' onClick={sendStreams}>Send Stream</button>
+                  </div>
+                )}
+                {remoteSocketId && (
+                  <div className="callIcon flex flex-col justify-center items-center hover:cursor-pointer">
+                    <IoCall className='text-white' />
+                    <button className='text-white btn_text_size' onClick={handleCallUser}>CALL</button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
