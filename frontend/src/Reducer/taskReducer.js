@@ -46,5 +46,11 @@ export const taskReducer = createReducer(initialState, (builder) => {
         .addCase("deleteTaskFailure", (state, action) => {
             state.loading = false;
             state.error = action.payload;
+        })
+        .addCase("clearErrors", (state) => {
+            state.error = null;
+        })
+        .addCase("clearMessage",(state)=>{
+            state.message = null;
         });
 });

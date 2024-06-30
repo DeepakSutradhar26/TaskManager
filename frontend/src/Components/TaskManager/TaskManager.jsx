@@ -1,26 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import "./TaskManager.css";
+import "./scrollbar.css";
 import { Link } from 'react-router-dom';
 import { IoHome } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaTasks } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useDispatch } from "react-redux";
-import { getUserTasks } from '../../Action/taskAction';
+import { useDispatch, useSelector } from "react-redux";
+import { createTask, getUserTasks } from '../../Action/taskAction';
 import Task from "./Task/Task";
+import { useAlert } from "react-alert";
 
 const TaskManager = () => {
     const [state, setState] = useState(false);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [toggleImp, setToggleImp] = useState(false);
+    const [toggleComplete, setToggleComplete] = useState(false);
     const dispatch = useDispatch();
+    const alert = useAlert();
+    const { tasks, error } = useSelector((state) => state.task);
 
     const handleAddTask = () => {
         setState(!state);
     }
 
+    const handleSumbit = async (e) => {
+        e.preventDefault();
+        await dispatch(createTask(title, description, toggleImp, toggleComplete));
+    }
+
     useEffect(() => {
         dispatch(getUserTasks());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch({ type: "clearErrors" });
+        }
+    }, [dispatch, error, alert]);
 
     return (
         <>
@@ -53,38 +73,66 @@ const TaskManager = () => {
                             <FaPlus className='plus_btn text-white' />
                         </div>
                     </div>
-                    <div className="task_box">
-                        <Task />
+                    <div className="task_box flex flex-row flex-wrap justify-evenly">
+                        {tasks && tasks.map((task) => (
+                            <Task
+                                key={task._id}
+                                title={task.title}
+                                description={task.description}
+                                toggleImp={task.toggleImp}
+                                toggleComplete={task.toggleComplete}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>
-            {state && (<div onClick={handleAddTask} className="addTaskBox flex justify-center items-center">
-                <form className="fillBox absolute flex flex-col">
-                    <div className="headCreateTask">
-                        Create a Task
+            {state && (<div className="addTaskBox flex justify-center items-center">
+                <form className="fillBox absolute flex flex-col items-center" onSubmit={handleSumbit}>
+                    <div className="headCreateTask wid_int flex item-center">
+                        <p className='flex items-center'>  Create a Task </p>
                     </div>
-                    <div className="title">
+                    <div className="title wid_int">
                         Title
                     </div>
-                    <input className='inputTask1' type="text" />
-                    <div className="description">
+                    <input
+                        className='inputTask1 wid_int'
+                        type="text"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                    />
+                    <div className="description wid_int">
                         Description
                     </div>
-                    <input className='inputTask2' type="text" />
-                    <div className="toggleBox flex flex-row items-center justify-between">
-                        <div className="toggleText">Toggle Completed</div>
-                        <input type="checkbox" />
+                    <textarea
+                        className='inputTask2 wid_int'
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                    />
+                    <div className="toggleBox1 flex flex-row items-center justify-between wid_int">
+                        <div className="toggleText text-white">Toggle Completed</div>
+                        <input
+                            type="checkbox"
+                            checked={toggleComplete}
+                            onChange={e => setToggleComplete(e.target.checked)}
+                        />
                     </div>
-                    <div className="toggleBox flex flex-row items-center justify-between">
-                        <div className="toggleText">Toggle Important</div>
-                        <input type="checkbox" />
+                    <div className="toggleBox2 flex flex-row items-center justify-between wid_int">
+                        <div className="toggleText text-white">Toggle Important</div>
+                        <input
+                            type="checkbox"
+                            checked={toggleImp}
+                            onChange={e => setToggleImp(e.target.checked)}
+                        />
                     </div>
-                    <div className="createIcon">
-                        <FaPlus />
-                        <span cl>Create Task</span>
+                    <div className="addMargin wid_int flex items-center justify-end">
+                        <button type='submit' className="createIcon bg-blue-500 hover:bg-blue-400 hover:cursor-pointer flex flex-row justify-evenly items-center">
+                            <FaPlus className='icon_style2' />
+                            <span className='text-white title'>Create Task</span>
+                        </button>
                     </div>
                 </form>
             </div>)}
+            {state && <div onClick={handleAddTask} className="blackBox"></div>}
         </>
     )
 }

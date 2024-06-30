@@ -54,6 +54,7 @@
     height: 3vw;
     width: 3vw;
     box-shadow: 0 0 2px #ffffff;
+    margin-right: 0.5vw;
 }
 
 .circle_ctn:hover{
@@ -65,43 +66,96 @@
 }
 
 .head_txt{
-    height: 5vw;
-    padding: 0 1.2vw;
+    height: 12vh;
+    padding: 0 2.2vw;
 }
 
 .headCreateTask{
     color: white;
-    font-size: 1.8vw;
+    font-size: 1.5vw;
+    font-weight: 600;
+    height: 4vw;
 }
 
 .addTaskBox{
     position: absolute;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(0, 0, 0, 0.26);
+    background:transparent;
 }
 
 .fillBox{
-    height: 32vw;
+    height: 29vw;
     width: 26vw;
     z-index: 10;
-    border: 1px solid red;
     border-radius: 1vw;
+    background: rgb(76, 76, 76);
 }
 
 .inputTask1{
     background: rgba(37, 37, 37, 0.895);
-    font-size: 1.2vw;
+    font-size: 1vw;
     color:white;
+    height: 2.4vw;
+    border-radius: 0.25vw;
+    padding: 0vw 0.6vw;
+    margin-top: 0.2vw;
+    margin-bottom: 1vw;
 }
 
 .inputTask2{
     background: rgba(37, 37, 37, 0.895);
-    font-size: 1.2vw;
+    font-size: 1w;
     color: white;
+    height: 7vw;
+    border-radius: 0.25vw;
+    padding: 0.4vw 0.6vw;
+    margin-top: 0.4vw;
 }
 
 .title,.description{
     color: white;
     font-size: 1.2vw;
+    font-weight: 400;
+}
+
+.createIcon{
+    height: 2vw;
+    width: 9vw;
+    border-radius: 0.3vw;
+}
+
+.icon_style2{
+    font-size: 1vw;
+    color: white;
+}
+.wid_int{
+    width: 88%;
+}
+
+.b{
+    border: 1px solid red;
+}
+
+.blackBox{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.308);
+}
+
+.toggleBox1{
+    margin-top: 1vw;
+}
+.toggleBox2{
+    margin-top: 0.6vw;
+}
+
+.addMargin{
+    margin-top: 2vw;
+}
+
+.task_box{
+    height: 75vh;
+    overflow-y: scroll;
 }
