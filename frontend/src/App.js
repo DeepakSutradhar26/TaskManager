@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Lobby from './Components/Screens/Lobby/Lobby';
 import Room from './Components/Screens/Room/Room';
 import Home from './Components/Home/Home';
