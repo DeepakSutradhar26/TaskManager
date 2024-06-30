@@ -15,12 +15,14 @@ export const createTask = ({ title, description, toggleImp, toggleComplete }) =>
             });
         dispatch({
             type: "createTaskSuccess",
-            payload: data.task,
+            payload: data.message,
         });
     } catch (error) {
         dispatch({
             type: "createTaskFailure",
-            payload: error.message,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
         });
     }
 }
@@ -44,14 +46,15 @@ export const getUserTasks = () => async (dispatch) => {
     }
 }
 
-export const updateTask = ({ title, description, toggleImp, toggleComplete }) => async (dispatch) => {
+export const updateTask = ({ title, description, toggleImp, toggleComplete, taskId }) => async (dispatch) => {
     try {
         dispatch({
             type: "updateTaskRequest"
         });
+        console.log(taskId);
 
         const { data } = await axios.put("api/v1/task/update",
-            { title, description, toggleImp, toggleComplete },
+            { title, description, toggleImp, toggleComplete, taskId },
             {
                 headers: {
                     "Content-Type": "application/json"
@@ -64,18 +67,23 @@ export const updateTask = ({ title, description, toggleImp, toggleComplete }) =>
     } catch (error) {
         dispatch({
             type: "updateTaskFailure",
-            payload: error.message,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
         });
     }
 }
 
-export const deleteTask = () => async (dispatch) => {
+export const deleteTask = (taskId) => async (dispatch) => {
     try {
         dispatch({
             type: "deleteTaskRequest"
         });
+        console.log(taskId);
 
-        const { data } = await axios.delete("api/v1/task/delete");
+        const { data } = await axios.delete("api/v1/task/delete",
+            { data: { taskId } }
+        );
         dispatch({
             type: "deleteTaskSuccess",
             payload: data.message,
@@ -83,7 +91,9 @@ export const deleteTask = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "deleteTaskFailure",
-            payload: error.message
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
         })
     }
 }

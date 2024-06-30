@@ -8,7 +8,7 @@ export const taskReducer = createReducer(initialState, (builder) => {
         })
         .addCase("createTaskSuccess", (state, action) => {
             state.loading = false;
-            state.task = action.payload;
+            state.message = action.payload;
         })
         .addCase("createTaskFailure", (state, action) => {
             state.loading = false;

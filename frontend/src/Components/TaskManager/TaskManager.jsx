@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import "./TaskManager.css";
 import "./scrollbar.css";
-import { Link } from 'react-router-dom';
 import { IoHome } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaTasks } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { createTask, getUserTasks } from '../../Action/taskAction';
+import { createTask, getUserTasks, updateTask } from '../../Action/taskAction';
 import Task from "./Task/Task";
 import { useAlert } from "react-alert";
+import { GrUpdate } from "react-icons/gr";
 
 const TaskManager = () => {
     const [state, setState] = useState(false);
@@ -20,7 +20,27 @@ const TaskManager = () => {
     const [toggleComplete, setToggleComplete] = useState(false);
     const dispatch = useDispatch();
     const alert = useAlert();
-    const { tasks, error } = useSelector((state) => state.task);
+    const { tasks, error, message } = useSelector((state) => state.task);
+    const [childData, setChildData] = useState(false);
+    const [taskId, setTaskId] = useState();
+
+    // Callback function to receive data from child
+    const handleChildData = (dataFromChild) => {
+        setChildData(dataFromChild);
+    };
+
+    const handleChildObject = (object) => {
+        console.log(object);
+        setTitle(object.title);
+        setDescription(object.description);
+        setToggleImp(object.toggleImp);
+        setToggleComplete(object.toggleComplete);
+        setTaskId(object.taskId);
+    }
+
+    const handleChangeChildData = () => {
+        setChildData(false);
+    }
 
     const handleAddTask = () => {
         setState(!state);
@@ -28,7 +48,24 @@ const TaskManager = () => {
 
     const handleSumbit = async (e) => {
         e.preventDefault();
-        await dispatch(createTask(title, description, toggleImp, toggleComplete));
+        if (!title || !description) {
+            alert.error('Title and Description are required.');
+            return;
+        }
+        await dispatch(createTask({ title, description, toggleImp, toggleComplete }));
+        dispatch(getUserTasks());
+        setState(false);
+    }
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        if (!title || !description) {
+            alert.error('Title and Description are required.');
+            return;
+        }
+        await dispatch(updateTask({ title, description, toggleImp, toggleComplete, taskId }));
+        dispatch(getUserTasks());
+        setChildData(false);
     }
 
     useEffect(() => {
@@ -39,6 +76,10 @@ const TaskManager = () => {
         if (error) {
             alert.error(error);
             dispatch({ type: "clearErrors" });
+        }
+        if (message) {
+            alert.success(message);
+            dispatch({ type: "clearMessage" });
         }
     }, [dispatch, error, alert]);
 
@@ -52,16 +93,16 @@ const TaskManager = () => {
                     <div className="sideBar flex flex-col">
                         <ul className='flex flex-col '>
                             <li>
-                                <IoHome className='text-white ' /> <Link to="/">Home</Link>
+                                <IoHome className='text-white ' /> <p to="/">Home</p>
                             </li>
                             <li>
-                                <GiHamburgerMenu className='text-white' /><Link to="/allTasks">All Tasks</Link>
+                                <GiHamburgerMenu className='text-white' /><p to="/allTasks">All Tasks</p>
                             </li>
                             <li>
-                                <FaTasks className='text-white' /><Link to="/important">Important</Link>
+                                <FaTasks className='text-white' /><p to="/important">Important</p>
                             </li>
                             <li>
-                                <FaCalendarCheck className='text-white' /><Link to="/completed">Completed</Link>
+                                <FaCalendarCheck className='text-white' /><p to="/completed">Completed</p>
                             </li>
                         </ul>
                     </div>
@@ -81,6 +122,9 @@ const TaskManager = () => {
                                 description={task.description}
                                 toggleImp={task.toggleImp}
                                 toggleComplete={task.toggleComplete}
+                                onData={handleChildData}
+                                onDataObject={handleChildObject}
+                                taskId={task._id}
                             />
                         ))}
                     </div>
@@ -132,7 +176,54 @@ const TaskManager = () => {
                     </div>
                 </form>
             </div>)}
+            {childData && (<div className="addTaskBox flex justify-center items-center">
+                <form onSubmit={handleUpdate} className="fillBox absolute flex flex-col items-center">
+                    <div className="headCreateTask wid_int flex item-center">
+                        <p className='flex items-center'>  Update Task </p>
+                    </div>
+                    <div className="title wid_int">
+                        Title
+                    </div>
+                    <input
+                        className='inputTask1 wid_int'
+                        type="text"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                    />
+                    <div className="description wid_int">
+                        Description
+                    </div>
+                    <textarea
+                        className='inputTask2 wid_int'
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                    />
+                    <div className="toggleBox1 flex flex-row items-center justify-between wid_int">
+                        <div className="toggleText text-white">Toggle Completed</div>
+                        <input
+                            type="checkbox"
+                            checked={toggleComplete}
+                            onChange={e => setToggleComplete(e.target.checked)}
+                        />
+                    </div>
+                    <div className="toggleBox2 flex flex-row items-center justify-between wid_int">
+                        <div className="toggleText text-white">Toggle Important</div>
+                        <input
+                            type="checkbox"
+                            checked={toggleImp}
+                            onChange={e => setToggleImp(e.target.checked)}
+                        />
+                    </div>
+                    <div className="addMargin wid_int flex items-center justify-end">
+                        <button type='submit' className="createIcon bg-blue-500 hover:bg-blue-400 hover:cursor-pointer flex flex-row justify-evenly items-center">
+                            <GrUpdate className='icon_style2' />
+                            <span className='text-white title'>Update Task</span>
+                        </button>
+                    </div>
+                </form>
+            </div>)}
             {state && <div onClick={handleAddTask} className="blackBox"></div>}
+            {childData && <div onClick={handleChangeChildData} className="blackBox"></div>}
         </>
     )
 }

@@ -7,12 +7,12 @@ const User = require("../models/userModel");
 exports.createTask = catchAsyncError(async (req, res) => {
     const { title, description, toggleImp, toggleComplete } = req.body;
 
-    const task = await Task.create({
+    await Task.create({
         title, description, toggleImp, toggleComplete, ownerId: req.user._id
     });
     res.status(201).json({
         success: true,
-        task
+        message:"Task Created"
     });
 });
 
@@ -29,6 +29,7 @@ exports.getUserTasks = catchAsyncError(async (req, res) => {
 //Update Task
 exports.updateTask = catchAsyncError(async (req, res, next) => {
     const { taskId } = req.body;
+    console.log(taskId);
     let task = await Task.findById(taskId);
 
     if (!task) {
@@ -51,7 +52,7 @@ exports.updateTask = catchAsyncError(async (req, res, next) => {
 });
 
 //Delete Task
-exports.deleteTask = catchAsyncError(async (req, res) => {
+exports.deleteTask = catchAsyncError(async (req, res,next) => {
     const { taskId } = req.body;
     const task = await Task.findById(taskId);
 
@@ -70,6 +71,7 @@ exports.deleteTask = catchAsyncError(async (req, res) => {
         }
     });
     await user.save();
+    await task.deleteOne();
 
     res.status(200).json({
         success: true,
