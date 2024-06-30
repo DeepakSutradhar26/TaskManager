@@ -12,7 +12,7 @@ exports.createTask = catchAsyncError(async (req, res) => {
     });
     res.status(201).json({
         success: true,
-        message:"Task Created"
+        message: "Task Created"
     });
 });
 
@@ -52,7 +52,7 @@ exports.updateTask = catchAsyncError(async (req, res, next) => {
 });
 
 //Delete Task
-exports.deleteTask = catchAsyncError(async (req, res,next) => {
+exports.deleteTask = catchAsyncError(async (req, res, next) => {
     const { taskId } = req.body;
     const task = await Task.findById(taskId);
 
@@ -76,5 +76,29 @@ exports.deleteTask = catchAsyncError(async (req, res,next) => {
     res.status(200).json({
         success: true,
         message: "Task Deleted"
+    });
+});
+
+//Get Important Tasks of User
+exports.getUserImpTasks = catchAsyncError(async (req, res) => {
+    let tasks = await Task.find({ ownerId: req.user._id });
+
+    tasks = tasks.filter(task => task.toggleImp === true);
+
+    res.status(200).json({
+        success: true,
+        tasks
+    });
+});
+
+//Get Completed Tasks of User
+exports.getUserComTasks = catchAsyncError(async (req, res) => {
+    let tasks = await Task.find({ ownerId: req.user._id });
+
+    tasks = tasks.filter(task => task.toggleComplete === true);
+
+    res.status(200).json({
+        success: true,
+        tasks
     });
 });

@@ -97,3 +97,41 @@ export const deleteTask = (taskId) => async (dispatch) => {
         })
     }
 }
+
+export const getUserImpTasks = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: "getUserImpTasksRequest"
+        });
+
+        const { data } = await axios.get("api/v1/tasks/imp");
+        dispatch({
+            type: "getUserImpTasksSuccess",
+            payload: data.tasks,
+        });
+    } catch (error) {
+        dispatch({
+            type: "getUserImpTasksFailure",
+            payload: error.message,
+        });
+    }
+}
+
+export const getUserComTasks = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: "getUserComTasksRequest"
+        });
+
+        const { data } = await axios.get("api/v1/tasks/com");
+        dispatch({
+            type: "getUserComTasksSuccess",
+            payload: data.tasks,
+        });
+    } catch (error) {
+        dispatch({
+            type: "getUserComTasksFailure",
+            payload: error.message,
+        });
+    }
+}

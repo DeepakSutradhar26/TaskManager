@@ -7,22 +7,25 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { FaTasks } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { createTask, getUserTasks, updateTask } from '../../Action/taskAction';
+import { createTask, getUserComTasks, getUserImpTasks, getUserTasks, updateTask } from '../../Action/taskAction';
 import Task from "./Task/Task";
 import { useAlert } from "react-alert";
 import { GrUpdate } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 const TaskManager = () => {
+    const dispatch = useDispatch();
+    const alert = useAlert();
+
     const [state, setState] = useState(false);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [toggleImp, setToggleImp] = useState(false);
     const [toggleComplete, setToggleComplete] = useState(false);
-    const dispatch = useDispatch();
-    const alert = useAlert();
-    const { tasks, error, message } = useSelector((state) => state.task);
     const [childData, setChildData] = useState(false);
     const [taskId, setTaskId] = useState();
+
+    const { tasks, error, message } = useSelector((state) => state.task);
 
     // Callback function to receive data from child
     const handleChildData = (dataFromChild) => {
@@ -68,9 +71,21 @@ const TaskManager = () => {
         setChildData(false);
     }
 
-    useEffect(() => {
+    const getAllTasks =() =>{
         dispatch(getUserTasks());
-    }, [dispatch]);
+    }
+
+    const getImpTasks =()=>{
+        dispatch(getUserImpTasks());
+    }
+
+    const getComTasks=()=>{
+        dispatch(getUserComTasks());
+    }
+
+    useEffect(() => {
+        getAllTasks();
+    }, []);
 
     useEffect(() => {
         if (error) {
@@ -91,18 +106,18 @@ const TaskManager = () => {
                 <div className="left_col flex flex-col">
                     <div className="profileBox"></div>
                     <div className="sideBar flex flex-col">
-                        <ul className='flex flex-col '>
+                        <ul className='flex flex-col'>
                             <li>
-                                <IoHome className='text-white ' /> <p to="/">Home</p>
+                                <IoHome className="icon_baba text-white" /> <Link to="/">Home</Link>
                             </li>
-                            <li>
-                                <GiHamburgerMenu className='text-white' /><p to="/allTasks">All Tasks</p>
+                            <li onClick={getAllTasks}>
+                                <GiHamburgerMenu className='text-white icon_baba' /><p to="/allTasks">All Tasks</p>
+                            </li >
+                            <li onClick={getImpTasks}>
+                                <FaTasks className='text-white icon_baba' /><p to="/important">Important</p>
                             </li>
-                            <li>
-                                <FaTasks className='text-white' /><p to="/important">Important</p>
-                            </li>
-                            <li>
-                                <FaCalendarCheck className='text-white' /><p to="/completed">Completed</p>
+                            <li onClick={getComTasks}>
+                                <FaCalendarCheck className='text-white icon_baba' /><p to="/completed">Completed</p>
                             </li>
                         </ul>
                     </div>

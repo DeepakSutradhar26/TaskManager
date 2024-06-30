@@ -30,7 +30,7 @@ const Navbar = () => {
         </div>
 
         <ul className='list_box flex flex-row justify-around items-center'>
-          <li><Link >Resources</Link></li>
+          <li><Link to="/tasks" >Tasks</Link></li>
           <li><Link to="/livechat">LiveChat</Link></li>
           <li><Link to="/lobby">VideoCall</Link></li>
           <li><Link to="/about">About Us</Link></li>

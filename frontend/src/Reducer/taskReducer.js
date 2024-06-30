@@ -25,6 +25,28 @@ export const taskReducer = createReducer(initialState, (builder) => {
             state.loading = false;
             state.error = action.payload;
         })
+        .addCase("getUserImpTasksRequest", (state) => {
+            state.loading = true
+        })
+        .addCase("getUserImpTasksSuccess", (state, action) => {
+            state.loading = false;
+            state.tasks = action.payload;
+        })
+        .addCase("getUserImpTasksFailure", (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        })
+        .addCase("getUserComTasksRequest", (state) => {
+            state.loading = true
+        })
+        .addCase("getUserComTasksSuccess", (state, action) => {
+            state.loading = false;
+            state.tasks = action.payload;
+        })
+        .addCase("getUserComTasksFailure", (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        })
         .addCase("updateTaskRequest", (state) => {
             state.loading = true
         })
